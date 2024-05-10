@@ -310,6 +310,21 @@ static bool ParseBoolBit(const char *value, uint32 *data, uint32 mask) {
   return true;
 }
 
+static bool ParseIntPair(char *value, int sep, int *resultA, int *resultB) {
+  const char* s;
+  *resultA = 0;
+  *resultB = 0;
+  while ((s = NextDelim(&value, sep)) != NULL) {
+    if(*resultA == 0) {
+      *resultA = atoi(s);
+    } else {
+      *resultB = atoi(s);
+      return true;
+    }
+  }
+  return false;
+}
+
 static bool HandleIniConfig(int section, const char *key, char *value) {
   if (section == 0) {
     for (int i = 0; i < countof(kKeyNameId); i++) {
@@ -330,20 +345,12 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
     }
   } else if (section == 1) {
     if (StringEqualsNoCase(key, "WindowSize")) {
-      char *s;
-      g_config.window_width  = 0;
-      g_config.window_height = 0;
       if (StringEqualsNoCase(value, "Auto")){
+        g_config.window_width  = 0;
+        g_config.window_height = 0;
         return true;
       }
-      while ((s = NextDelim(&value, 'x')) != NULL) {
-        if(g_config.window_width == 0) {
-          g_config.window_width = atoi(s);
-        } else {
-          g_config.window_height = atoi(s);
-          return true;
-        }
-      }
+      return ParseIntPair(value, 'x', &g_config.window_width, &g_config.window_height);
     } else if (StringEqualsNoCase(key, "EnhancedMode7")) {
       return ParseBool(value, &g_config.enhanced_mode7);
     } else if (StringEqualsNoCase(key, "NewRenderer")) {
@@ -411,17 +418,7 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       g_config.autosave = (bool)strtol(value, (char**)NULL, 10);
       return true;
     } else if (StringEqualsNoCase(key, "AspectRatio")) {
-      const char* s;
-      g_config.aspect_ratio_width = 0;
-      g_config.aspect_ratio_height = 0;
-      while ((s = NextDelim(&value, ':')) != NULL) {
-        if(g_config.aspect_ratio_width == 0) {
-          g_config.aspect_ratio_width = atoi(s);
-        } else {
-          g_config.aspect_ratio_height = atoi(s);
-          return true;
-        }
-      }
+      return ParseIntPair(value, ':', &g_config.aspect_ratio_width, &g_config.aspect_ratio_height);
     } else if (StringEqualsNoCase(key, "ExtendY")) {
       return ParseBool(value, &g_config.extend_y);
     } else if (StringEqualsNoCase(key, "UnchangedSprites")) {
