@@ -331,9 +331,9 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
   } else if (section == 1) {
     if (StringEqualsNoCase(key, "WindowSize")) {
       char *s;
+      g_config.window_width  = 0;
+      g_config.window_height = 0;
       if (StringEqualsNoCase(value, "Auto")){
-        g_config.window_width  = 0;
-        g_config.window_height = 0;
         return true;
       }
       while ((s = NextDelim(&value, 'x')) != NULL) {
