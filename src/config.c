@@ -410,34 +410,24 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
     if (StringEqualsNoCase(key, "Autosave")) {
       g_config.autosave = (bool)strtol(value, (char**)NULL, 10);
       return true;
-    } else if (StringEqualsNoCase(key, "ExtendedAspectRatio")) {
+    } else if (StringEqualsNoCase(key, "AspectRatio")) {
       const char* s;
-      int h = 224;
-      bool nospr = false, novis = false;
-      // todo: make it not depend on the order
-      while ((s = NextDelim(&value, ',')) != NULL) {
-        if (strcmp(s, "extend_y") == 0)
-          h = 240, g_config.extend_y = true;
-        else if (strcmp(s, "16:9") == 0)
-          g_config.extended_aspect_ratio = (h * 16 / 9 - 256) / 2;
-        else if (strcmp(s, "16:10") == 0)
-          g_config.extended_aspect_ratio = (h * 16 / 10 - 256) / 2;
-        else if (strcmp(s, "18:9") == 0)
-          g_config.extended_aspect_ratio = (h * 18 / 9 - 256) / 2;
-        else if (strcmp(s, "4:3") == 0)
-          g_config.extended_aspect_ratio = 0;
-        else if (strcmp(s, "unchanged_sprites") == 0)
-          nospr = true;
-        else if (strcmp(s, "no_visual_fixes") == 0)
-          novis = true;
-        else
-          return false;
+      g_config.aspect_ratio_width = 0;
+      g_config.aspect_ratio_height = 0;
+      while ((s = NextDelim(&value, ':')) != NULL) {
+        if(g_config.aspect_ratio_width == 0) {
+          g_config.aspect_ratio_width = atoi(s);
+        } else {
+          g_config.aspect_ratio_height = atoi(s);
+          return true;
+        }
       }
-      if (g_config.extended_aspect_ratio && !nospr)
-        g_config.features0 |= kFeatures0_ExtendScreen64;
-      if (g_config.extended_aspect_ratio && !novis)
-        g_config.features0 |= kFeatures0_WidescreenVisualFixes;
-      return true;
+    } else if (StringEqualsNoCase(key, "ExtendY")) {
+      return ParseBool(value, &g_config.extend_y);
+    } else if (StringEqualsNoCase(key, "UnchangedSprites")) {
+      return ParseBool(value, &g_config.unchanged_sprites);
+    } else if (StringEqualsNoCase(key, "NoVisualFixes")) {
+      return ParseBool(value, &g_config.no_visual_fixes);
     } else if (StringEqualsNoCase(key, "DisplayPerfInTitle")) {
       return ParseBool(value, &g_config.display_perf_title);
     } else if (StringEqualsNoCase(key, "DisableFrameDelay")) {

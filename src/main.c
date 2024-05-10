@@ -294,13 +294,56 @@ int main(int argc, char** argv) {
     SwitchDirectory();
   }
   ParseConfigFile(config_file);
+
+
+  /* conversion of aspect ratio to pixel resolution: */
+
+  // default aspect ratio 8:7
+  if (g_config.aspect_ratio_width == 0 && g_config.aspect_ratio_height == 0) {
+    g_config.aspect_ratio_width = 8;
+    g_config.aspect_ratio_height = 7;
+  };
+
+  // ensure no aspect ratio axis is 0
+  if (g_config.aspect_ratio_width == 0 || g_config.aspect_ratio_height == 0) {
+    printf("Cannot use AspectRatio %i:%i as it contains a 0\n", g_config.aspect_ratio_width, g_config.aspect_ratio_height);
+    return 1;
+  };
+
+  // debug print outs
+  printf("AspectRatio:        %i:%i\n", g_config.aspect_ratio_width, g_config.aspect_ratio_height);
+
+  printf("ExtendY:            %i\n", g_config.extend_y);
+  printf("UnchangedSprites:   %i\n", g_config.unchanged_sprites);
+  printf("NoVisualFixes:      %i\n", g_config.no_visual_fixes);
+
+  // apply unchanged_sprites and no_visual_fixes
+  printf("features0 (before): %i\n", g_config.features0);
+
+  if (g_config.extended_aspect_ratio && !g_config.unchanged_sprites)
+    g_config.features0 |= kFeatures0_ExtendScreen64;
+  if (g_config.extended_aspect_ratio && !g_config.no_visual_fixes)
+    g_config.features0 |= kFeatures0_WidescreenVisualFixes;
+
+  printf("features0 (after):  %i\n", g_config.features0);
+
+  // pixel resolution
+  g_snes_height = (g_config.extend_y ? 240 : 224);
+  g_snes_width = g_snes_height * g_config.aspect_ratio_width / g_config.aspect_ratio_height;
+
+  int ear = (g_snes_width - 256) / 2;
+  g_config.extended_aspect_ratio = IntMax(ear, 0);
+
+  printf("SNES pixel width:   %i\n", g_snes_width);
+  printf("SNES pixel height:  %i\n", g_snes_height);
+  printf("ext. aspect ratio:  %i\n", g_config.extended_aspect_ratio);
+
+
   LoadAssets();
   LoadLinkGraphics();
 
   ZeldaInitialize();
   g_zenv.ppu->extraLeftRight = UintMin(g_config.extended_aspect_ratio, kPpuExtraLeftRight);
-  g_snes_width = (g_config.extended_aspect_ratio * 2 + 256);
-  g_snes_height = (g_config.extend_y ? 240 : 224);
 
 
   // Delay actually setting those features in ram until any snapshots finish playing.

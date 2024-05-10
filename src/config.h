@@ -60,7 +60,11 @@ typedef struct Config {
   uint16 audio_samples;
   bool autosave;
   uint8 extended_aspect_ratio;
+  int aspect_ratio_width;
+  int aspect_ratio_height;
   bool extend_y;
+  bool unchanged_sprites;
+  bool no_visual_fixes;
   bool no_sprite_limits;
   bool display_perf_title;
   uint8 enable_msu;
