@@ -203,7 +203,8 @@ static void SDLCALL AudioCallback(void *userdata, Uint8 *stream, int len) {
 // State for sdl renderer
 static SDL_Renderer *g_renderer;
 static SDL_Texture *g_texture;
-static SDL_Rect g_sdl_renderer_rect;
+static SDL_Rect g_sdl_renderer_rect_src;
+static SDL_Rect g_sdl_renderer_rect_dst;
 
 static bool SdlRenderer_Init(SDL_Window *window) {
 
@@ -247,9 +248,15 @@ static void SdlRenderer_Destroy() {
 }
 
 static void SdlRenderer_BeginDraw(int width, int height, uint8 **pixels, int *pitch) {
-  g_sdl_renderer_rect.w = width;
-  g_sdl_renderer_rect.h = height;
-  if (SDL_LockTexture(g_texture, &g_sdl_renderer_rect, (void **)pixels, pitch) != 0) {
+  g_sdl_renderer_rect_src.x = 0;
+  g_sdl_renderer_rect_src.w = width;
+  g_sdl_renderer_rect_src.h = height;
+
+  g_sdl_renderer_rect_dst.x = 0;
+  g_sdl_renderer_rect_dst.w = width;
+  g_sdl_renderer_rect_dst.h = height;
+
+  if (SDL_LockTexture(g_texture, &g_sdl_renderer_rect_src, (void **)pixels, pitch) != 0) {
     printf("Failed to lock texture: %s\n", SDL_GetError());
     return;
   }
@@ -263,7 +270,7 @@ static void SdlRenderer_EndDraw() {
 //  float v = (double)(after - before) / SDL_GetPerformanceFrequency();
 //  printf("%f ms\n", v * 1000);
   SDL_RenderClear(g_renderer);
-  SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect, NULL);
+  SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, &g_sdl_renderer_rect_dst);
   SDL_RenderPresent(g_renderer); // vsyncs to 60 FPS?
 }
 
