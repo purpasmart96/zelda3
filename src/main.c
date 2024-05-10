@@ -343,6 +343,9 @@ int main(int argc, char** argv) {
   printf("SNES pixel height:  %i\n", g_snes_height);
   printf("ext. aspect ratio:  %i\n", g_config.extended_aspect_ratio);
 
+  printf("Window width:       %i\n", g_config.window_width);
+  printf("Window height:      %i\n", g_config.window_height);
+
 
   LoadAssets();
   LoadLinkGraphics();
