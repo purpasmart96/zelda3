@@ -248,12 +248,17 @@ static void SdlRenderer_Destroy() {
 }
 
 static void SdlRenderer_BeginDraw(int width, int height, uint8 **pixels, int *pitch) {
+  int shift = 0;
+  if (width < 256) {
+    shift = (256 - width) / 2;
+  }
+
   g_sdl_renderer_rect_src.x = 0;
-  g_sdl_renderer_rect_src.w = width;
+  g_sdl_renderer_rect_src.w = width + shift;
   g_sdl_renderer_rect_src.h = height;
 
-  g_sdl_renderer_rect_dst.x = 0;
-  g_sdl_renderer_rect_dst.w = width;
+  g_sdl_renderer_rect_dst.x = -shift;
+  g_sdl_renderer_rect_dst.w = width + shift;
   g_sdl_renderer_rect_dst.h = height;
 
   if (SDL_LockTexture(g_texture, &g_sdl_renderer_rect_src, (void **)pixels, pitch) != 0) {
