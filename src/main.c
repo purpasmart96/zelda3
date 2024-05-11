@@ -345,7 +345,7 @@ int main(int argc, char** argv) {
     printf("Language:              %s\n", g_config.language);
 
     printf("\n[Graphics]\n");
-    printf("WindowSize:            %i:%i\n", g_config.window_width, g_config.window_height);
+    printf("WindowSize:            %ix%i\n", g_config.window_width, g_config.window_height);
     printf("EnhancedMode7:         %s\n", b2s(g_config.enhanced_mode7));
     printf("NewRenderer:           %s\n", b2s(g_config.new_renderer));
     printf("IgnoreAspectRatio:     %s\n", b2s(g_config.ignore_aspect_ratio));
@@ -388,8 +388,7 @@ int main(int argc, char** argv) {
 //    printf("\n[GamepadMap]\n");
 
     printf("\n[Derived]\n");
-    printf("SNES pixel width:      %i\n", g_snes_width);
-    printf("SNES pixel height:     %i\n", g_snes_height);
+    printf("SNES pixel resolution: %ix%i\n", g_snes_width, g_snes_width);
     printf("ext. aspect ratio:     %i\n", g_config.extended_aspect_ratio);
     printf("Features:              %i\n", g_config.features0);
 
