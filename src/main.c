@@ -277,7 +277,7 @@ static void SdlRenderer_EndDraw() {
 //  float v = (double)(after - before) / SDL_GetPerformanceFrequency();
 //  printf("%f ms\n", v * 1000);
   SDL_RenderClear(g_renderer);
-  if (ignore_aspect_ratio) {
+  if (g_config.ignore_aspect_ratio) {
     SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, NULL);
   } else {
     SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, &g_sdl_renderer_rect_dst);
