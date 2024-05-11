@@ -336,7 +336,16 @@ int main(int argc, char** argv) {
 
   // debug print outs
   if (g_config.debug) {
-//    printf("\n[KeyMap]\n");
+    printf("\n[General]\n");
+    printf("Autosave:           %s\n", b2s(g_config.autosave));
+    printf("Debug:              %s\n", b2s(g_config.debug));
+    printf("AspectRatio:        %i:%i\n", g_config.aspect_ratio_width, g_config.aspect_ratio_height);
+    printf("ExtendedY:          %s\n", b2s(g_config.extended_y));
+    printf("UnchangedSprites:   %s\n", b2s(g_config.unchanged_sprites));
+    printf("NoVisualFixes:      %s\n", b2s(g_config.no_visual_fixes));
+    printf("DisplayPerfInTitle: %s\n", b2s(g_config.display_perf_title));
+    printf("DisableFrameDelay:  %s\n", b2s(g_config.disable_frame_delay));
+    printf("Language:           %s\n", g_config.language);
 
     printf("\n[Graphics]\n");
     printf("WindowSize:         %i:%i\n", g_config.window_width, g_config.window_height);
@@ -362,18 +371,8 @@ int main(int argc, char** argv) {
     printf("MSUVolume:          %i\n", g_config.msuvolume);
     printf("ResumeMSU:          %s\n", b2s(g_config.resume_msu));
 
-    printf("\n[General]\n");
-    printf("Autosave:           %s\n", b2s(g_config.autosave));
-    printf("Debug:              %s\n", b2s(g_config.debug));
-    printf("AspectRatio:        %i:%i\n", g_config.aspect_ratio_width, g_config.aspect_ratio_height);
-    printf("ExtendedY:          %s\n", b2s(g_config.extended_y));
-    printf("UnchangedSprites:   %s\n", b2s(g_config.unchanged_sprites));
-    printf("NoVisualFixes:      %s\n", b2s(g_config.no_visual_fixes));
-    printf("DisplayPerfInTitle: %s\n", b2s(g_config.display_perf_title));
-    printf("DisableFrameDelay:  %s\n", b2s(g_config.disable_frame_delay));
-    printf("Language:           %s\n", g_config.language);
-
 //    printf("\n[Features]\n");
+//    printf("\n[KeyMap]\n");
 //    printf("\n[GamepadMap]\n");
 
     printf("\n[Derived]\n");
