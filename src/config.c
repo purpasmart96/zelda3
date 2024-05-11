@@ -419,6 +419,8 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
   } else if (section == 3) {
     if (StringEqualsNoCase(key, "Autosave")) {
       return ParseBool(value, &g_config.autosave);
+    } else if (StringEqualsNoCase(key, "Debug")) {
+      return ParseBool(value, &g_config.debug);
     } else if (StringEqualsNoCase(key, "AspectRatio")) {
       return ParseIntPair(value, ':', &g_config.aspect_ratio_width, &g_config.aspect_ratio_height);
     } else if (StringEqualsNoCase(key, "ExtendedY")) {
