@@ -419,8 +419,8 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       return true;
     } else if (StringEqualsNoCase(key, "AspectRatio")) {
       return ParseIntPair(value, ':', &g_config.aspect_ratio_width, &g_config.aspect_ratio_height);
-    } else if (StringEqualsNoCase(key, "ExtendY")) {
-      return ParseBool(value, &g_config.extend_y);
+    } else if (StringEqualsNoCase(key, "ExtendedY")) {
+      return ParseBool(value, &g_config.extended_y);
     } else if (StringEqualsNoCase(key, "UnchangedSprites")) {
       return ParseBool(value, &g_config.unchanged_sprites);
     } else if (StringEqualsNoCase(key, "NoVisualFixes")) {

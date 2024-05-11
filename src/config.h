@@ -62,7 +62,7 @@ typedef struct Config {
   uint8 extended_aspect_ratio;
   int aspect_ratio_width;
   int aspect_ratio_height;
-  bool extend_y;
+  bool extended_y;
   bool unchanged_sprites;
   bool no_visual_fixes;
   bool no_sprite_limits;

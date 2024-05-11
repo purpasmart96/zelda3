@@ -318,7 +318,7 @@ int main(int argc, char** argv) {
   // debug print outs
   printf("AspectRatio:        %i:%i\n", g_config.aspect_ratio_width, g_config.aspect_ratio_height);
 
-  printf("ExtendY:            %i\n", g_config.extend_y);
+  printf("ExtendedY:          %i\n", g_config.extended_y);
   printf("UnchangedSprites:   %i\n", g_config.unchanged_sprites);
   printf("NoVisualFixes:      %i\n", g_config.no_visual_fixes);
 
@@ -333,7 +333,7 @@ int main(int argc, char** argv) {
   printf("features0 (after):  %i\n", g_config.features0);
 
   // pixel resolution
-  g_snes_height = (g_config.extend_y ? 240 : 224);
+  g_snes_height = (g_config.extended_y ? 240 : 224);
   g_snes_width = g_snes_height * g_config.aspect_ratio_width / g_config.aspect_ratio_height;
 
   int ear = (g_snes_width - 256) / 2;
@@ -359,7 +359,7 @@ int main(int argc, char** argv) {
 
   g_ppu_render_flags = g_config.new_renderer * kPpuRenderFlags_NewRenderer |
                        g_config.enhanced_mode7 * kPpuRenderFlags_4x4Mode7 |
-                       g_config.extend_y * kPpuRenderFlags_Height240 |
+                       g_config.extended_y * kPpuRenderFlags_Height240 |
                        g_config.no_sprite_limits * kPpuRenderFlags_NoSpriteLimits;
   ZeldaEnableMsu(g_config.enable_msu);
   ZeldaSetLanguage(g_config.language);
