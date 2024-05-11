@@ -28,6 +28,7 @@
 #include "audio.h"
 
 #define b2s(x) ((x) ? "true" : "false")
+#define f2s(x) b2s(g_config.features0 & x)
 
 static bool g_run_without_emu = 0;
 
@@ -325,14 +326,10 @@ int main(int argc, char** argv) {
   g_config.extended_aspect_ratio = IntMax(ear, 0);
 
   // apply unchanged_sprites and no_visual_fixes
-  if (g_config.debug) printf("features0 (before): %i\n", g_config.features0);
-
   if (g_config.extended_aspect_ratio && !g_config.unchanged_sprites)
     g_config.features0 |= kFeatures0_ExtendScreen64;
   if (g_config.extended_aspect_ratio && !g_config.no_visual_fixes)
     g_config.features0 |= kFeatures0_WidescreenVisualFixes;
-
-  if (g_config.debug) printf("features0 (after):  %i\n", g_config.features0);
 
   // debug print outs
   if (g_config.debug) {
@@ -359,7 +356,7 @@ int main(int argc, char** argv) {
     printf("NoSpriteLimits:     %s\n", b2s(g_config.no_sprite_limits));
     printf("LinkGraphics:       %s\n", g_config.link_graphics);
     printf("Shader:             %s\n", g_config.shader);
-    //DimFlashes
+    printf("DimFlashes:         %s\n", f2s(kFeatures0_DimFlashes));
 
     printf("\n[Sound]\n");
     printf("EnableAudio:        %s\n", b2s(g_config.enable_audio));
@@ -371,7 +368,22 @@ int main(int argc, char** argv) {
     printf("MSUVolume:          %i\n", g_config.msuvolume);
     printf("ResumeMSU:          %s\n", b2s(g_config.resume_msu));
 
-//    printf("\n[Features]\n");
+    printf("\n[Features]\n");
+    printf("ItemSwitchLR:          %s\n", f2s(kFeatures0_SwitchLR));
+    printf("ItemSwitchLRLimit:     %s\n", f2s(kFeatures0_SwitchLRLimit));
+    printf("TurnWhileDashing:      %s\n", f2s(kFeatures0_TurnWhileDashing));
+    printf("MirrorToDarkworld:     %s\n", f2s(kFeatures0_MirrorToDarkworld));
+    printf("CollectItemsWithSword: %s\n", f2s(kFeatures0_CollectItemsWithSword));
+    printf("BreakPotsWithSword:    %s\n", f2s(kFeatures0_BreakPotsWithSword));
+    printf("DisableLowHealthBeep:  %s\n", f2s(kFeatures0_DisableLowHealthBeep));
+    printf("SkipIntroOnKeypress:   %s\n", f2s(kFeatures0_SkipIntroOnKeypress));
+    printf("ShowMaxItemsInYellow:  %s\n", f2s(kFeatures0_ShowMaxItemsInYellow));
+    printf("MoreActiveBombs:       %s\n", f2s(kFeatures0_MoreActiveBombs));
+    printf("CarryMoreRupees:       %s\n", f2s(kFeatures0_CarryMoreRupees));
+    printf("MiscBugFixes:          %s\n", f2s(kFeatures0_MiscBugFixes));
+    printf("GameChangingBugFixes:  %s\n", f2s(kFeatures0_GameChangingBugFixes));
+    printf("CancelBirdTravel:      %s\n", f2s(kFeatures0_CancelBirdTravel));
+
 //    printf("\n[KeyMap]\n");
 //    printf("\n[GamepadMap]\n");
 
@@ -379,6 +391,7 @@ int main(int argc, char** argv) {
     printf("SNES pixel width:   %i\n", g_snes_width);
     printf("SNES pixel height:  %i\n", g_snes_height);
     printf("ext. aspect ratio:  %i\n", g_config.extended_aspect_ratio);
+    printf("Features:           %i\n", g_config.features0);
 
     printf("\n");
   }
