@@ -271,14 +271,17 @@ static void SdlRenderer_BeginDraw(int width, int height, uint8 **pixels, int *pi
 }
 
 static void SdlRenderer_EndDraw() {
-
 //  uint64 before = SDL_GetPerformanceCounter();
   SDL_UnlockTexture(g_texture);
 //  uint64 after = SDL_GetPerformanceCounter();
 //  float v = (double)(after - before) / SDL_GetPerformanceFrequency();
 //  printf("%f ms\n", v * 1000);
   SDL_RenderClear(g_renderer);
-  SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, &g_sdl_renderer_rect_dst);
+  if (ignore_aspect_ratio) {
+    SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, NULL);
+  } else {
+    SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, &g_sdl_renderer_rect_dst);
+  }
   SDL_RenderPresent(g_renderer); // vsyncs to 60 FPS?
 }
 
