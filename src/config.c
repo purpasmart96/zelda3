@@ -310,6 +310,14 @@ static bool ParseBoolBit(const char *value, uint32 *data, uint32 mask) {
   return true;
 }
 
+static bool ParseUInt8(const char *value, uint8 *result) {
+  *result = (uint8)strtol(value, (char**)NULL, 10);
+}
+
+static bool ParseUInt16(const char *value, uint16 *result) {
+  *result = (uint16)strtol(value, (char**)NULL, 10);
+}
+
 static bool ParseIntPair(char *value, int sep, int *resultA, int *resultB) {
   const char* s;
   *resultA = 0;
@@ -358,11 +366,9 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
     } else if (StringEqualsNoCase(key, "IgnoreAspectRatio")) {
       return ParseBool(value, &g_config.ignore_aspect_ratio);
     } else if (StringEqualsNoCase(key, "Fullscreen")) {
-      g_config.fullscreen = (uint8)strtol(value, (char**)NULL, 10);
-      return true;
+      return ParseUInt8(value, &g_config.fullscreen);
     } else if (StringEqualsNoCase(key, "WindowScale")) {
-      g_config.window_scale = (uint8)strtol(value, (char**)NULL, 10);
-      return true;
+      return ParseUInt8(value, &g_config.window_scale);
     } else if (StringEqualsNoCase(key, "OutputMethod")) {
       g_config.output_method = StringEqualsNoCase(value, "SDL-Software") ? kOutputMethod_SDLSoftware :
                                StringEqualsNoCase(value, "OpenGL") ? kOutputMethod_OpenGL : 
@@ -386,14 +392,11 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
     if (StringEqualsNoCase(key, "EnableAudio")) {
       return ParseBool(value, &g_config.enable_audio);
     } else if (StringEqualsNoCase(key, "AudioFreq")) {
-      g_config.audio_freq = (uint16)strtol(value, (char**)NULL, 10);
-      return true;
+      return ParseUInt16(value, &g_config.audio_freq);
     } else if (StringEqualsNoCase(key, "AudioChannels")) {
-      g_config.audio_channels = (uint8)strtol(value, (char**)NULL, 10);
-      return true;
+      return ParseUInt8(value, &g_config.audio_channels);
     } else if (StringEqualsNoCase(key, "AudioSamples")) {
-      g_config.audio_samples = (uint16)strtol(value, (char**)NULL, 10);
-      return true;
+      return ParseUInt16(value, &g_config.audio_samples);
     } else if (StringEqualsNoCase(key, "EnableMSU")) {
         if (StringEqualsNoCase(value, "opuz"))
         g_config.enable_msu = kMsuEnabled_Opuz;
