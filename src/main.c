@@ -388,7 +388,7 @@ int main(int argc, char** argv) {
 //    printf("\n[GamepadMap]\n");
 
     printf("\n[Derived]\n");
-    printf("SNES pixel resolution: %ix%i\n", g_snes_width, g_snes_width);
+    printf("SNES pixel resolution: %ix%i\n", g_snes_width, g_snes_height);
     printf("ext. aspect ratio:     %i\n", g_config.extended_aspect_ratio);
     printf("Features:              %i\n", g_config.features0);
 
