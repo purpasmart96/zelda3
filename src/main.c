@@ -27,6 +27,8 @@
 #include "util.h"
 #include "audio.h"
 
+#define b2s(x) ((x) ? "true" : "false")
+
 static bool g_run_without_emu = 0;
 
 // Forwards
@@ -334,18 +336,52 @@ int main(int argc, char** argv) {
 
   // debug print outs
   if (g_config.debug) {
+//    printf("\n[KeyMap]\n");
+
+    printf("\n[Graphics]\n");
+    printf("WindowSize:         %i:%i\n", g_config.window_width, g_config.window_height);
+    printf("EnhancedMode7:      %s\n", b2s(g_config.enhanced_mode7));
+    printf("NewRenderer:        %s\n", b2s(g_config.new_renderer));
+    printf("IgnoreAspectRatio:  %s\n", b2s(g_config.ignore_aspect_ratio));
+    printf("Fullscreen:         %u\n", g_config.fullscreen);
+    printf("WindowScale:        %u\n", g_config.window_scale);
+    printf("OutputMethod:       %i\n", g_config.output_method);
+    printf("LinearFiltering:    %s\n", b2s(g_config.linear_filtering));
+    printf("NoSpriteLimits:     %s\n", b2s(g_config.no_sprite_limits));
+    printf("LinkGraphics:       %s\n", g_config.link_graphics);
+    printf("Shader:             %s\n", g_config.shader);
+    //DimFlashes
+
+    printf("\n[Sound]\n");
+    printf("EnableAudio:        %s\n", b2s(g_config.enable_audio));
+    printf("AudioFreq:          %u\n", g_config.audio_freq);
+    printf("AudioChannels:      %u\n", g_config.audio_channels);
+    printf("AudioSamples:       %u\n", g_config.audio_samples);
+    printf("EnableMSU:          %i\n", g_config.enable_msu);
+    printf("MSUPath:            %s\n", g_config.msu_path);
+    printf("MSUVolume:          %i\n", g_config.msuvolume);
+    printf("ResumeMSU:          %s\n", b2s(g_config.resume_msu));
+
+    printf("\n[General]\n");
+    printf("Autosave:           %s\n", b2s(g_config.autosave));
+    printf("Debug:              %s\n", b2s(g_config.debug));
     printf("AspectRatio:        %i:%i\n", g_config.aspect_ratio_width, g_config.aspect_ratio_height);
+    printf("ExtendedY:          %s\n", b2s(g_config.extended_y));
+    printf("UnchangedSprites:   %s\n", b2s(g_config.unchanged_sprites));
+    printf("NoVisualFixes:      %s\n", b2s(g_config.no_visual_fixes));
+    printf("DisplayPerfInTitle: %s\n", b2s(g_config.display_perf_title));
+    printf("DisableFrameDelay:  %s\n", b2s(g_config.disable_frame_delay));
+    printf("Language:           %s\n", g_config.language);
 
-    printf("ExtendedY:          %i\n", g_config.extended_y);
-    printf("UnchangedSprites:   %i\n", g_config.unchanged_sprites);
-    printf("NoVisualFixes:      %i\n", g_config.no_visual_fixes);
+//    printf("\n[Features]\n");
+//    printf("\n[GamepadMap]\n");
 
+    printf("\n[Derived]\n");
     printf("SNES pixel width:   %i\n", g_snes_width);
     printf("SNES pixel height:  %i\n", g_snes_height);
     printf("ext. aspect ratio:  %i\n", g_config.extended_aspect_ratio);
 
-    printf("Window width:       %i\n", g_config.window_width);
-    printf("Window height:      %i\n", g_config.window_height);
+    printf("\n");
   }
 
 
