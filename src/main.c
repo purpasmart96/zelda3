@@ -346,6 +346,7 @@ int main(int argc, char** argv) {
     printf("NoVisualFixes:         %s\n", b2s(g_config.no_visual_fixes));
     printf("DisplayPerfInTitle:    %s\n", b2s(g_config.display_perf_title));
     printf("DisableFrameDelay:     %s\n", b2s(g_config.disable_frame_delay));
+    printf("GamepadQuit:           %s\n", b2s(g_config.gamepad_quit));
     printf("Language:              %s\n", g_config.language);
 
     printf("\n[Graphics]\n");
@@ -523,7 +524,7 @@ int main(int argc, char** argv) {
       case SDL_CONTROLLERBUTTONDOWN:
       case SDL_CONTROLLERBUTTONUP: {
         // exit if start and select buttons are pressed together
-        if (CheckGamepadQuit(event.cbutton)) {
+        if (g_config.gamepad_quit && CheckGamepadQuit(event.cbutton)) {
           running = false;
           break;
         }
