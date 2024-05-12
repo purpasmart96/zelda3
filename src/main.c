@@ -41,6 +41,7 @@ static void HandleCommand(uint32 j, bool pressed);
 static int RemapSdlButton(int button);
 static void HandleGamepadInput(int button, bool pressed);
 static void HandleGamepadAxisInput(int gamepad_id, int axis, int value);
+static bool CheckGamepadQuit(SDL_ControllerButtonEvent cbutton);
 static void OpenOneGamepad(int i);
 static void HandleVolumeAdjustment(int volume_adjustment);
 static void LoadAssets();
@@ -521,6 +522,11 @@ int main(int argc, char** argv) {
         break;
       case SDL_CONTROLLERBUTTONDOWN:
       case SDL_CONTROLLERBUTTONUP: {
+        // exit if start and select buttons are pressed together
+        if (CheckGamepadQuit(event.cbutton)) {
+          running = false;
+          break;
+        }
         int b = RemapSdlButton(event.cbutton.button);
         if (b >= 0)
           HandleGamepadInput(b, event.type == SDL_CONTROLLERBUTTONDOWN);
@@ -871,6 +877,19 @@ static void HandleGamepadAxisInput(int gamepad_id, int axis, int value) {
     if (value < 12000 || value >= 16000)  // hysteresis
       HandleGamepadInput(axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT ? kGamepadBtn_L2 : kGamepadBtn_R2, value >= 12000);
   }
+}
+
+static bool CheckGamepadQuit(SDL_ControllerButtonEvent cbutton) {
+  if (cbutton.button != SDL_CONTROLLER_BUTTON_START && cbutton.button != SDL_CONTROLLER_BUTTON_BACK)
+    return false;
+
+  SDL_GameController* controller = SDL_GameControllerFromInstanceID(cbutton.which);
+  bool pressed_start  = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START);
+  bool pressed_select = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_BACK);
+  if (pressed_start && pressed_select)
+    return true;
+  else
+    return false;
 }
 
 static bool LoadRom(const char *filename) {
