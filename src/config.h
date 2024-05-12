@@ -71,6 +71,7 @@ typedef struct Config {
   uint8 enable_msu;
   bool resume_msu;
   bool disable_frame_delay;
+  bool gamepad_quit;
   uint8 msuvolume;
   uint32 features0;
 

@@ -433,6 +433,8 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       return ParseBool(value, &g_config.display_perf_title);
     } else if (StringEqualsNoCase(key, "DisableFrameDelay")) {
       return ParseBool(value, &g_config.disable_frame_delay);
+    } else if (StringEqualsNoCase(key, "GamepadQuit")) {
+      return ParseBool(value, &g_config.gamepad_quit);
     } else if (StringEqualsNoCase(key, "Language")) {
       g_config.language = value;
       return true;
