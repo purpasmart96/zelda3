@@ -363,8 +363,8 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       return ParseBool(value, &g_config.enhanced_mode7);
     } else if (StringEqualsNoCase(key, "NewRenderer")) {
       return ParseBool(value, &g_config.new_renderer);
-    } else if (StringEqualsNoCase(key, "IgnoreAspectRatio")) {
-      return ParseBool(value, &g_config.ignore_aspect_ratio);
+    } else if (StringEqualsNoCase(key, "StretchToFit")) {
+      return ParseBool(value, &g_config.stretch_to_fit);
     } else if (StringEqualsNoCase(key, "Fullscreen")) {
       return ParseUInt8(value, &g_config.fullscreen);
     } else if (StringEqualsNoCase(key, "WindowScale")) {

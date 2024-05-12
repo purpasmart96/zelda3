@@ -231,7 +231,7 @@ static bool SdlRenderer_Init(SDL_Window *window) {
     printf("\n");
   }
   g_renderer = renderer;
-  if (!g_config.ignore_aspect_ratio)
+  if (!g_config.stretch_to_fit)
     SDL_RenderSetLogicalSize(renderer, g_snes_width, g_snes_height);
   if (g_config.linear_filtering)
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "best");
@@ -278,7 +278,7 @@ static void SdlRenderer_EndDraw() {
 //  float v = (double)(after - before) / SDL_GetPerformanceFrequency();
 //  printf("%f ms\n", v * 1000);
   SDL_RenderClear(g_renderer);
-  if (g_config.ignore_aspect_ratio) {
+  if (g_config.stretch_to_fit) {
     SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, NULL);
   } else {
     SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect_src, &g_sdl_renderer_rect_dst);
@@ -353,7 +353,7 @@ int main(int argc, char** argv) {
     printf("WindowSize:            %ix%i\n", g_config.window_width, g_config.window_height);
     printf("EnhancedMode7:         %s\n", b2s(g_config.enhanced_mode7));
     printf("NewRenderer:           %s\n", b2s(g_config.new_renderer));
-    printf("IgnoreAspectRatio:     %s\n", b2s(g_config.ignore_aspect_ratio));
+    printf("StretchToFit:          %s\n", b2s(g_config.stretch_to_fit));
     printf("Fullscreen:            %u\n", g_config.fullscreen);
     printf("WindowScale:           %u\n", g_config.window_scale);
     printf("OutputMethod:          %i\n", g_config.output_method);

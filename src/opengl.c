@@ -200,7 +200,7 @@ static void OpenGLRenderer_EndDraw() {
   
   int viewport_width = drawable_width, viewport_height = drawable_height;
 
-  if (!g_config.ignore_aspect_ratio) {
+  if (!g_config.stretch_to_fit) {
     if (viewport_width * g_draw_height < viewport_height * g_draw_width)
       viewport_height = viewport_width * g_draw_height / g_draw_width;  // limit height
     else

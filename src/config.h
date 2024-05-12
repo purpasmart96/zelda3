@@ -49,7 +49,7 @@ typedef struct Config {
   int window_height;
   bool enhanced_mode7;
   bool new_renderer;
-  bool ignore_aspect_ratio;
+  bool stretch_to_fit;
   uint8 fullscreen;
   uint8 window_scale;
   bool enable_audio;
