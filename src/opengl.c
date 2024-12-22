@@ -209,22 +209,17 @@ static void OpenGLRenderer_EndDraw() {
 
   int viewport_width = drawable_width, viewport_height = drawable_height;
 
-//  if (!g_config.stretch_to_fit) {
-//    if (viewport_width * g_draw_height < viewport_height * g_draw_width)
-//      viewport_height = viewport_width * g_draw_height / g_draw_width;  // limit height
-//    else
-//      viewport_width = viewport_height * g_draw_width / g_draw_height;  // limit width
-//  }
-
   int viewport_x = (drawable_width - viewport_width) >> 1;
   int viewport_y = (drawable_height - viewport_height) >> 1;
 
-  double ratio_exact = (double) drawable_width / g_draw_width;
-  int ratio = ceil(ratio_exact);
-  int shift = ratio * g_draw_shift;
+  if (!g_config.stretch_to_fit) {
+    double ratio_exact = (double) drawable_width / g_draw_width;
+    int ratio = ceil(ratio_exact);
+    int shift = ratio * g_draw_shift;
 
-  viewport_x -= shift;
-  viewport_width += shift;
+    viewport_x -= shift;
+    viewport_width += shift;
+  }
 
   glBindTexture(GL_TEXTURE_2D, g_texture.gl_texture);
   if (g_draw_width == g_texture.width && g_draw_height == g_texture.height) {
