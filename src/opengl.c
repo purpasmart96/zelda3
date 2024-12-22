@@ -184,6 +184,7 @@ static void OpenGLRenderer_BeginDraw(int width, int height, uint8 **pixels, int 
   if (size > g_screen_buffer_size) {
     g_screen_buffer_size = size;
     free(g_screen_buffer);
+    size *= 2; // double the buffer size to accommodate off-screen pixels used to center the image TODO: what is the correct value?
     g_screen_buffer = malloc(size * 4);
   }
 
@@ -197,7 +198,7 @@ static void OpenGLRenderer_EndDraw() {
   int drawable_width, drawable_height;
 
   SDL_GL_GetDrawableSize(g_window, &drawable_width, &drawable_height);
-  
+
   int viewport_width = drawable_width, viewport_height = drawable_height;
 
   if (!g_config.stretch_to_fit) {
@@ -208,7 +209,7 @@ static void OpenGLRenderer_EndDraw() {
   }
 
   int viewport_x = (drawable_width - viewport_width) >> 1;
-  int viewport_y = (viewport_height - viewport_height) >> 1;
+  int viewport_y = (drawable_height - viewport_height) >> 1;
 
   glBindTexture(GL_TEXTURE_2D, g_texture.gl_texture);
   if (g_draw_width == g_texture.width && g_draw_height == g_texture.height) {
