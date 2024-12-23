@@ -180,11 +180,14 @@ static void OpenGLRenderer_Destroy() {
 
 static void OpenGLRenderer_BeginDraw(int width, int height, uint8 **pixels, int *pitch) {
   int shift = 0;
-  if (width < 256) {
-    shift = (256 - width) / 2;
-  }
 
-  width += shift;
+  if (!g_config.stretch_to_fit) {
+    if (width < 256) {
+      shift = (256 - width) / 2;
+    }
+
+    width += shift;
+  }
 
   int size = width * height;
 
