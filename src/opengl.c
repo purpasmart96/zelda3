@@ -234,9 +234,9 @@ static void OpenGLRenderer_EndDraw() {
     g_texture.width = g_draw_width;
     g_texture.height = g_draw_height;
     if (!g_opengl_es)
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_draw_width, g_draw_height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, g_screen_buffer);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_draw_width, g_draw_height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, g_screen_buffer); //TODO should this GL_RGBA also be GL_BGRA ?
     else
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_draw_width, g_draw_height, 0, GL_BGRA, GL_UNSIGNED_BYTE, g_screen_buffer);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA, g_draw_width, g_draw_height, 0, GL_BGRA, GL_UNSIGNED_BYTE, g_screen_buffer);
   }
 
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
